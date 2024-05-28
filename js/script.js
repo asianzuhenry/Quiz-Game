@@ -34,10 +34,6 @@ const OptionsList = [
     ]
 ]
 
-
-console.log(QuestionsList[index]);
-console.log(QuestionsList.length - 1);
-
 const QuestionDisplay = document.querySelector('.question-section')
 const OptionsDisplay = document.querySelector('.options-section')
 QuestionDisplay.textContent = QuestionsList[index].toUpperCase()
@@ -66,70 +62,15 @@ const getOption = () => {
 
 
 const getNextOption = () => {
-    /*
-    if (prop < OptionsList[prop].length + 1) {
-        prop++
+    prop++
+
+    if (prop < QuestionsList.length) {
 
         options = OptionsList[prop]
         const OptionsDisplayNext = document.createElement('div')
         OptionsDisplayNext.className = 'options-section'
 
-        options.find(option => {
-            const opt = document.createElement('div')
-            const label = document.createElement('label')
-            const radiobtn = document.createElement('input')
-            const OptionsDisplay = document.querySelector('.options-section')
-
-
-            opt.className = 'option'
-            label.htmlFor = 'option'
-            radiobtn.type = 'radio'
-            radiobtn.name = 'option'
-
-            radiobtn.id = option
-            label.innerText = option
-            opt.append(radiobtn, ' ', label)
-            OptionsDisplayNext.append(opt)
-            OptionsDisplay.replaceWith(OptionsDisplayNext)
-        })
-    }
-    else if (prop > OptionsList[prop].length) {
-        prop = 0
-
-        options = OptionsList[prop]
-        const OptionsDisplayNext = document.createElement('div')
-        OptionsDisplayNext.className = 'options-section'
-
-        options.find(option => {
-            const opt = document.createElement('div')
-            const label = document.createElement('label')
-            const radiobtn = document.createElement('input')
-            const OptionsDisplay = document.querySelector('.options-section')
-
-
-            opt.className = 'option'
-            label.htmlFor = 'option'
-            radiobtn.type = 'radio'
-            radiobtn.name = 'option'
-
-            radiobtn.id = option
-            label.innerText = option
-            opt.append(radiobtn, ' ', label)
-            OptionsDisplayNext.append(opt)
-            OptionsDisplay.replaceWith(OptionsDisplayNext)
-        })
-    }
-
-    */
-
-    if (index < QuestionsList.length - 1) {
-        prop++
-
-        options = OptionsList[prop]
-        const OptionsDisplayNext = document.createElement('div')
-        OptionsDisplayNext.className = 'options-section'
-
-        options.find(option => {
+        options.forEach(option => {
             const opt = document.createElement('div')
             const label = document.createElement('label')
             const radiobtn = document.createElement('input')
@@ -148,7 +89,7 @@ const getNextOption = () => {
             OptionsDisplay.replaceWith(OptionsDisplayNext)
         })
         }
-        else if (index = QuestionsList.length) {
+        else if (prop = QuestionsList.length) {
             prop = 0
 
             options = OptionsList[prop]
@@ -175,7 +116,6 @@ const getNextOption = () => {
             })
     
         }
-    
     
     }
 
