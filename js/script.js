@@ -46,16 +46,17 @@ const getOption = () => {
     options.find(option => {
         const opt = document.createElement('div')
         const label = document.createElement('label')
-        const radiobtn = document.createElement('input')
 
         opt.className = 'option'
         label.htmlFor = 'option'
-        radiobtn.type = 'radio'
-        radiobtn.name = 'option'
 
-        radiobtn.id = option
         label.innerText = option
-        opt.append(radiobtn, ' ', label)
+
+        opt.addEventListener('click', () => {
+            // HandleOptionClick()
+            opt.style.backgroundColor = 'red'
+        })
+        opt.append(label)
         OptionsDisplay.append(opt)
     })
 }
@@ -73,18 +74,14 @@ const getNextOption = () => {
         options.forEach(option => {
             const opt = document.createElement('div')
             const label = document.createElement('label')
-            const radiobtn = document.createElement('input')
             const OptionsDisplay = document.querySelector('.options-section')
 
 
             opt.className = 'option'
             label.htmlFor = 'option'
-            radiobtn.type = 'radio'
-            radiobtn.name = 'option'
 
-            radiobtn.id = option
             label.innerText = option
-            opt.append(radiobtn, ' ', label)
+            opt.append(label)
             OptionsDisplayNext.append(opt)
             OptionsDisplay.replaceWith(OptionsDisplayNext)
         })
@@ -99,18 +96,14 @@ const getNextOption = () => {
             options.find(option => {
                 const opt = document.createElement('div')
                 const label = document.createElement('label')
-                const radiobtn = document.createElement('input')
                 const OptionsDisplay = document.querySelector('.options-section')
     
     
                 opt.className = 'option'
                 label.htmlFor = 'option'
-                radiobtn.type = 'radio'
-                radiobtn.name = 'option'
     
-                radiobtn.id = option
                 label.innerText = option
-                opt.append(radiobtn, ' ', label)
+                opt.append(label)
                 OptionsDisplayNext.append(opt)
                 OptionsDisplay.replaceWith(OptionsDisplayNext)
             })
