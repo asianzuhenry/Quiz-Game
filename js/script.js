@@ -1,138 +1,98 @@
-// 
+// Import quiz data
+import quizData from "./data.js";
 
 // Variables
-let index = 0
-let prop = 0
-
-const QuestionsList = [
-    '1 What is a map?',
-    '2 What is a what?',
-    '3 What is a question?',
-    '4 What is a plateau?'
-]
-const OptionsList = [
-    [
-        '1A',
-        'B',
-        'C',
-        'D'
-    ],
-    [
-        '2Aa',
-        'Bb',
-        'Cc',
-        'Dd'
-    ],
-    [
-        '3Aaa',
-        'Bbb'
-    ],
-    [
-        '4Ab',
-        'Bc',
-        'Cd'
-    ]
-]
-
-const QuestionDisplay = document.querySelector('.question-section')
-const OptionsDisplay = document.querySelector('.options-section')
-QuestionDisplay.textContent = QuestionsList[index].toUpperCase()
-
-const getOption = () => {
-    prop = 0
-
-    options = OptionsList[prop]
-    
-    options.find(option => {
-        const opt = document.createElement('div')
-        const label = document.createElement('label')
-
-        opt.className = 'option'
-        label.htmlFor = 'option'
-
-        label.innerText = option
-
-        opt.addEventListener('click', () => {
-            // HandleOptionClick()
-            opt.style.backgroundColor = 'red'
-        })
-        opt.append(label)
-        OptionsDisplay.append(opt)
-    })
-}
+// let index = 0
+let prop = 0;
 
 
-const getNextOption = () => {
-    prop++
+let options = [];
 
-    if (prop < QuestionsList.length) {
+const getOption = (index) => {
+  const QuestionDisplay = document.querySelector(".question-section");
+  const OptionsDisplay = document.querySelector(".options-section");
+  QuestionDisplay.textContent = quizData[index].question.toUpperCase();
+  prop = 0;
 
-        options = OptionsList[prop]
-        const OptionsDisplayNext = document.createElement('div')
-        OptionsDisplayNext.className = 'options-section'
+  options = quizData[index];
+  options = Object.values(options);
 
-        options.forEach(option => {
-            const opt = document.createElement('div')
-            const label = document.createElement('label')
-            const OptionsDisplay = document.querySelector('.options-section')
+  options[1].forEach((option) => {
+    const opt = document.createElement("div");
+    const label = document.createElement("label");
 
+    opt.className = "option";
+    label.htmlFor = "option";
 
-            opt.className = 'option'
-            label.htmlFor = 'option'
+    label.innerText = option;
 
-            label.innerText = option
-            opt.append(label)
-            OptionsDisplayNext.append(opt)
-            OptionsDisplay.replaceWith(OptionsDisplayNext)
-        })
-        }
-        else if (prop = QuestionsList.length) {
-            prop = 0
+    opt.addEventListener("click", () => {
+      HandleOptionClick(option, quizData[index].correct);
+      opt.style.backgroundColor = "red";
+    });
+    opt.append(label);
+    OptionsDisplay.append(opt);
+  });
+};
 
-            options = OptionsList[prop]
-            const OptionsDisplayNext = document.createElement('div')
-            OptionsDisplayNext.className = 'options-section'
-    
-            options.find(option => {
-                const opt = document.createElement('div')
-                const label = document.createElement('label')
-                const OptionsDisplay = document.querySelector('.options-section')
-    
-    
-                opt.className = 'option'
-                label.htmlFor = 'option'
-    
-                label.innerText = option
-                opt.append(label)
-                OptionsDisplayNext.append(opt)
-                OptionsDisplay.replaceWith(OptionsDisplayNext)
-            })
-    
-        }
-    
+const HandleOptionClick = (selected, correct) => {
+  console.log("Selected:", selected);
+  console.log("Correct:", correct);
+  const optionsDivs = document.querySelectorAll(".option");
+  optionsDivs.forEach((div) => {
+    div.style.pointerEvents = "none";
+    if (div.textContent === correct) {
+      div.style.backgroundColor = "green";
+    } else {
+      div.style.backgroundColor = "red";
     }
+  });
+};
 
+const getNextOption = (newindex) => {
+    console.log(newindex);
+    
+    const QuestionDisplay = document.querySelector(".question-section");
+    const OptionsDisplay = document.querySelector(".options-section");
+    QuestionDisplay.innerText = quizData[newindex].question.toUpperCase();
 
-const Questions = () => {
-    if (index < QuestionsList.length - 1) {
-        index++
-        QuestionDisplay.textContent = QuestionsList[index].toUpperCase()
-    }
-    else if (index = QuestionsList.length) {
-        index = 0
-        QuestionDisplay.textContent = QuestionsList[index].toUpperCase()
+    const newOptionsDisplay = document.createElement("div");
+    newOptionsDisplay.className = "options-section";
 
-    }
+    options = quizData[newindex];
+    options = Object.values(options);
 
-}
+    options[1].forEach((option) => {
+        const opt = document.createElement("div");
+        const label = document.createElement("label");
 
+        opt.className = "option";
+        label.htmlFor = "option";
+
+        label.innerText = option;
+
+        opt.addEventListener("click", () => {
+            HandleOptionClick(option, quizData[newindex].correct);
+            opt.style.backgroundColor = "red";
+        });
+        opt.append(label);
+        newOptionsDisplay.append(opt);
+    });
+    OptionsDisplay.replaceWith(newOptionsDisplay);
+};
+
+// increment the index -> load next question [prop]
 const Next = () => {
-    Questions()
-    getNextOption()
+    prop++;
+    if(prop >= quizData.length - 1) {
+        alert("Quiz Over");
+        return;
+    } else {
+        getNextOption(prop);
+    }
 }
 
-getOption()
 
-
-
-
+getOption(prop);
+ 
+document.getElementById('next').addEventListener('click', Next)
